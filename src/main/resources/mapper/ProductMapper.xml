@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.coding404.myweb.product.service.ProductMapper">
+  
+  <insert id="productRegist" parameterType="ProductVO">
+  
+  	insert into PRODUCT (prod_enddate,
+  						 prod_writer,
+  						 prod_name,
+  						 prod_price,
+  						 prod_count,
+  						 prod_discount,
+  						 prod_purchase_yn,
+  						 prod_content,
+  						 prod_comment	) 
+  			     values(#{prod_enddate},
+  			     	 	#{prod_writer},
+  			     	 	#{prod_name},
+  			     	 	#{prod_price},
+  			     	 	#{prod_count},
+  			     	 	#{prod_discount},
+  			     	 	#{prod_purchase_yn},
+  			     	 	#{prod_content},
+  			     	 	#{prod_comment})
+  </insert>
+  
+  <select id="getList" resultType="ProductVO">
+	<!-- admin계정만 조회될 수 있게. -->
+  	select * from PRODUCT where prod_writer = #{writer}
+  </select>
+  
+  <select id="getDetail" resultType="ProductVO">
+  	select * from PRODUCT where prod_id = #{prod_id}
+  </select>
+  
+  <update id="productUpdate" parameterType="ProductVO">
+     
+  	update product set prod_price= #{prod_price},
+  	 					prod_enddate = #{prod_enddate},
+  	 					prod_name = #{prod_name},
+  	 					prod_count= #{prod_count},
+  	 					prod_discount=#{prod_discount},
+  	 					prod_content = #{prod_content}, 
+  			     	   prod_purchase_yn=#{prod_purchase_yn},
+  	                   prod_comment = #{prod_comment}	                   
+  			     	    where prod_id = #{prod_id} and prod_writer = #{prod_writer} 
+  </update>
+  
+  
+  <delete id="productDelete" >
+  	delete from PRODUCT where prod_id = #{prod_id} <!-- 단일값이 1개라면 사용 가능  -->
+  
+  </delete>
+  
+  
+  </mapper>
